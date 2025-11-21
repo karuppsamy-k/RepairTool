@@ -17,7 +17,7 @@ export interface RepairJob {
 export class MobileRepairApiService {
 
   // 🔥 Production API base URL (Render)
-  private readonly baseUrl = 'https://mobile-repair-tool-server.onrender.com/repairs';
+  private readonly baseUrl = 'https://repair-tool-server-1.onrender.com/repairs';
 
   async getAllRepairs(): Promise<RepairJob[]> {
     const res = await fetch(this.baseUrl, { method: 'GET' });
