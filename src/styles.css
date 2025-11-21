@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for the application */
+:root {
+  --app-background-color: #f0f0f0; /* Light gray background */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Light gray background for the entire page */
+  font-family: Arial, sans-serif;
+}
+
+/* App component background */
+app-root {
+  background-color: #f0f0f0; /* Light gray background for the main app container */
+  min-height: 100vh;
+}
+

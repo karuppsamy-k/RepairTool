@@ -1,0 +1,125 @@
+<div class="page">
+  <h1>Mobile Service Center - Jobs</h1>
+
+  <section class="card full-width">
+    <div class="card-header">
+      <h2>{{ selected ? 'Edit Repair Job' : 'Add New Repair Job' }}</h2>
+      <button class="secondary" type="button" (click)="startAdd()">+ New Job</button>
+    </div>
+
+    <form class="form" (ngSubmit)="save()">
+      <div class="form-row">
+        <label>Customer Name *</label>
+        <input
+          type="text"
+          name="customerName"
+          [(ngModel)]="form.customerName"
+          required
+          placeholder="Enter customer name"
+        />
+      </div>
+
+      <div class="form-row">
+        <label>Phone Model *</label>
+        <input
+          type="text"
+          name="phoneModel"
+          [(ngModel)]="form.phoneModel"
+          required
+          placeholder="Ex: Samsung Galaxy S21"
+        />
+      </div>
+
+      <div class="form-row">
+        <label>Issue *</label>
+        <textarea
+          name="issue"
+          [(ngModel)]="form.issue"
+          rows="2"
+          required 
+          placeholder="Describe the problem"
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <label>Status</label>
+        <select name="status" [(ngModel)]="form.status">
+          <option value="pending">Pending</option>
+          <option value="in_progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Price Estimate (₹)</label>
+        <input
+          type="number"
+          name="priceEstimate"
+          [(ngModel)]="form.priceEstimate"
+          min="0"
+          step="50"
+          placeholder="Ex: 2500"
+        />
+      </div>
+
+      <div class="actions">
+        <button class="primary" type="submit">
+          {{ selected ? 'Update Job' : 'Create Job' }}
+        </button>
+        <button class="secondary" type="button" (click)="cancel()">Clear</button>
+      </div>
+
+      <div *ngIf="error" class="error">
+        {{ error }}
+      </div>
+    </form>
+  </section>
+
+  <section class="card full-width">
+    <div class="card-header">
+      <h2>All Repair Jobs</h2>
+      <span *ngIf="loading">Loading...</span>
+    </div>
+
+    <div class="list">
+      <div class="list-header">
+        <span>ID</span>
+        <span>Customer</span>
+        <span>Phone Model</span>
+        <span>Status</span>
+        <span>Estimate (₹)</span>
+        <span>Date</span>
+        <span>Actions</span>
+      </div>
+
+      <div
+        class="list-row"
+        *ngFor="let job of repairs"
+        (click)="startEdit(job)"
+      >
+        <span>{{ job.id }}</span>
+        <span>{{ job.customerName }}</span>
+        <span>{{ job.phoneModel }}</span>
+        <span class="status" [ngClass]="job.status">
+          {{ job.status }}
+        </span>
+        <span>{{ job.priceEstimate || '-' }}</span>
+        <span>{{ job.createdAt ? (job.createdAt.split(' ')[0]) : '-' }}</span>
+        <span class="row-actions">
+          <button
+            class="danger"
+            type="button"
+            (click)="remove(job.id); $event.stopPropagation();"
+          >
+            Delete
+          </button>
+        </span>
+      </div>
+
+      <div *ngIf="!loading && repairs.length === 0" class="empty">
+        No repair jobs yet. Use "New Job" to add one.
+      </div>
+    </div>
+  </section>
+</div>
